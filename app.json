@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "climo",
+    "slug": "climo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "climo"
+}
