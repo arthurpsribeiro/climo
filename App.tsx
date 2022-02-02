@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import AppLoading from "expo-app-loading"
+import { ThemeProvider } from 'styled-components/native';
+
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold
+} from "@expo-google-fonts/poppins";
+
+import { CityForecastDetails } from './src/screens/CityForecastDetails';
+import theme from './src/styles/theme';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_600SemiBold
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Climo App</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme={theme}>
+      <CityForecastDetails />
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
