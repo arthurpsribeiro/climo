@@ -11,6 +11,7 @@ import {
 
 import { CityForecastDetails } from './src/screens/CityForecastDetails';
 import theme from './src/styles/theme';
+import { CitySearch } from './src/screens/CitySearch';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -25,7 +26,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CityForecastDetails />
+      <CitySearch />
     </ThemeProvider>
   );
 }
