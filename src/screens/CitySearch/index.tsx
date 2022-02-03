@@ -13,8 +13,8 @@ export function CitySearch() {
     <Container>
       <StatusBar
         barStyle='light-content'
-      // backgroundColor="transparent"
-      // translucent
+        backgroundColor="transparent"
+        translucent
       />
 
       <Header>

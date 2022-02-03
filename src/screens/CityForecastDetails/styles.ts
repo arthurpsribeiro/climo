@@ -1,27 +1,26 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background_primary};
 `;
 
 export const Header = styled.View`
   width: 100%;
-  height: ${RFPercentage(42)}px;
+  height: ${RFPercentage(36)}px;
   
   background-color: ${({ theme }) => theme.colors.main};
 
-  /* justify-content: center; */
   align-items: center;
 `;
 
 export const CityWrapper = styled.View`
-  width: 100%;
-  padding: 0 24px;
-  margin-top: ${RFValue(28)}px;
+  /* width: 100%; */
+  /* padding: 0 24px; */
+  margin-top: ${RFValue(40)}px;
 
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 
   /* height: ${RFPercentage(32)}px; */
@@ -30,26 +29,45 @@ export const CityWrapper = styled.View`
 
 export const CityName = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
-  font-size: ${RFValue(26)}px;
+  font-size: ${RFValue(24)}px;
   font-family: ${({ theme }) => theme.fonts.medium};
 `;
 
 export const CityTemp = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
-  font-size: ${RFValue(30)}px;
+  font-size: ${RFValue(34)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
 
 export const CityWheater = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
 
 export const CityMinMax = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(12)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
+`;
+
+export const HourlyForecastList = styled.ScrollView.attrs({
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: { paddingHorizontal: 24 },
+})`
+  width: 100%;
+  position: absolute;
+  margin-top: ${RFPercentage(28)}px;
+`;
+
+export const ScrollableContent = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: { paddingVertical: 24 },
+})`
+  flex: 1;
+  padding: 0 24px;
+  margin-top: ${RFPercentage(10)}px;
 `;
 
 export const Title = styled.Text`
@@ -60,59 +78,7 @@ export const Title = styled.Text`
   /* background-color: ${({ theme }) => theme.colors.attention}; */
 `;
 
-export const HourlyForecastWrapper = styled.View`
-
-  width: 100%;
-  height: 150px;
-
-  /* padding-left : 24px ; */
-
-  position: absolute;
-  margin-top: ${RFPercentage(32)}px;
-  /* background-color: ${({ theme }) => theme.colors.attention}; */
-
-`
-
-export const HourlyForecastTitle = styled.View`
-
-  width: 100%;
-
-  padding-left : 24px ;
-
-  /* background-color: ${({ theme }) => theme.colors.attention}; */
-
-`
-
-export const HourlyForecastList = styled.ScrollView.attrs({
-  horizontal: true,
-  showsHorizontalScrollIndicator: false,
-  contentContainerStyle: { paddingHorizontal: 24 },
-  justifyContent: "center",
-  alignItems: "center",
-
-})`
-  width: 100%;
-
-  /* height: 100px; */
-  /* position: absolute; */
-  /* margin-top: ${RFPercentage(5)}px; */
-
-  /* background-color: red; */
-
-
-`;
-
-export const TenDaysForecastWrapper = styled.View`
-  flex: 1;
-  padding: 0 24px;
-  margin-top: ${RFPercentage(16)}px;
-`;
-
 export const TenDaysForecastList = styled.View`
   width: 100%;
   margin-top: ${RFPercentage(2)}px;
-
-  /* height: 120px; */
-
-  /* background-color: ${({ theme }) => theme.colors.attention}; */
 `;

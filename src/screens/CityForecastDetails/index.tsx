@@ -13,12 +13,10 @@ import {
   CityTemp,
   CityWheater,
   CityMinMax,
-  HourlyForecastWrapper,
-  HourlyForecastTitle,
   HourlyForecastList,
   Title,
-  TenDaysForecastWrapper,
   TenDaysForecastList,
+  ScrollableContent
 
 } from './styles';
 
@@ -27,13 +25,13 @@ export function CityForecastDetails() {
     <Container>
       <StatusBar
         barStyle='light-content'
-      // backgroundColor="transparent"
-      // translucent
+        backgroundColor="transparent"
+        translucent
       />
 
       <Header>
         <CityWrapper>
-          {/* <SunIcon width={100} height={100} /> */}
+          {/* <SunIcon width={38} height={38} /> */}
           <CityName> Guarulhos </CityName>
           <CityTemp> 29° </CityTemp>
           <CityWheater> Ensolarado </CityWheater>
@@ -41,29 +39,26 @@ export function CityForecastDetails() {
         </CityWrapper>
       </Header>
 
-      <HourlyForecastWrapper>
+      <HourlyForecastList>
 
-        <HourlyForecastTitle>
-          <Title> PREVISÃO HORÁRIA </Title>
-        </HourlyForecastTitle>
+        <HourlyForecastCard hour='09h' forecast='26°' />
 
-        <HourlyForecastList>
+      </HourlyForecastList>
 
-          <HourlyForecastCard hour='09h' forecast='26°' />
-
-        </HourlyForecastList>
-
-      </HourlyForecastWrapper>
-
-      <TenDaysForecastWrapper>
+      <ScrollableContent>
 
         <Title> PREVISÃO EM 10 DIAS </Title>
 
         <TenDaysForecastList>
+
           <DailyForecastCard weekday='Segunda' min='18' max='25' />
+
         </TenDaysForecastList>
 
-      </TenDaysForecastWrapper>
+      </ScrollableContent>
+
+
+
     </Container>
   );
 }

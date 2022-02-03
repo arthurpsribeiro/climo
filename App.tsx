@@ -2,6 +2,8 @@ import React from 'react';
 import AppLoading from "expo-app-loading"
 import { ThemeProvider } from 'styled-components/native';
 
+import { NavigationContainer } from '@react-navigation/native';
+
 import {
   useFonts,
   Poppins_400Regular,
@@ -12,6 +14,7 @@ import {
 import { CityForecastDetails } from './src/screens/CityForecastDetails';
 import theme from './src/styles/theme';
 import { CitySearch } from './src/screens/CitySearch';
+import { AppRoutes } from './src/routes/app.routes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -26,7 +29,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CitySearch />
+      <NavigationContainer>
+        <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   );
 }

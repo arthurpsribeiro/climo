@@ -24,17 +24,13 @@ export const HeaderTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
 `;
 
-// export const CitiesResults = styled.ScrollView.attrs({
-//   showsVerticalScrollIndicator: false,
-//   contentContainerStyle: { paddingVertical: 24 },
-// })`
-
 export const CitiesResults = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
+  contentContainerStyle: { paddingVertical: 24 },
 })`
-  margin-top: ${RFValue(20)}px;
-  /* margin-bottom: ${RFValue(20)}px; */
+  flex: 1;
   padding: 0 15px;
+  margin-top: ${RFPercentage(1)}px;
 `;
 
 
