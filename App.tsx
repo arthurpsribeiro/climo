@@ -16,6 +16,8 @@ import theme from './src/styles/theme';
 import { CitySearch } from './src/screens/CitySearch';
 import { AppRoutes } from './src/routes/app.routes';
 
+import { CityProvider } from './src/hooks/city';
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
@@ -30,7 +32,9 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <AppRoutes />
+        <CityProvider>
+          <AppRoutes />
+        </CityProvider>
       </NavigationContainer>
     </ThemeProvider>
   );
