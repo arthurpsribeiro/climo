@@ -1,8 +1,8 @@
 import React from 'react';
 import AppLoading from "expo-app-loading"
 import { ThemeProvider } from 'styled-components/native';
-
 import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'react-native';
 
 import {
   useFonts,
@@ -11,12 +11,9 @@ import {
   Poppins_600SemiBold
 } from "@expo-google-fonts/poppins";
 
-import { CityForecastDetails } from './src/screens/CityForecastDetails';
 import theme from './src/styles/theme';
-import { CitySearch } from './src/screens/CitySearch';
 import { AppRoutes } from './src/routes/app.routes';
-
-import { CityProvider } from './src/hooks/city';
+import { CurrentCityProvider } from './src/hooks/currentCity';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -32,9 +29,14 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-        <CityProvider>
+        <StatusBar
+          barStyle='light-content'
+          backgroundColor="transparent"
+          translucent
+        />
+        <CurrentCityProvider>
           <AppRoutes />
-        </CityProvider>
+        </CurrentCityProvider>
       </NavigationContainer>
     </ThemeProvider>
   );

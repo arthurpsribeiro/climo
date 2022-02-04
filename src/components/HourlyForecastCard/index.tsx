@@ -1,6 +1,5 @@
 import React from 'react';
-
-import SunIcon from '../../assets/sun-temp.svg'
+import { Image } from 'react-native';
 
 import {
   HourlyForecastContainer,
@@ -9,16 +8,19 @@ import {
 } from './styles';
 
 interface HourlyForecastProps {
-  hour: string,
-  forecast: string
-}
+  hourlyWeather: {
+    hour: number,
+    temp: number,
+    icon: string
+  }
+};
 
-export function HourlyForecastCard({ hour, forecast }: HourlyForecastProps) {
+export function HourlyForecastCard({ hourlyWeather }: HourlyForecastProps) {
   return (
     <HourlyForecastContainer>
-      <Hour> {hour} </Hour>
-      <SunIcon width={38} height={38} />
-      <Forecast> {forecast} </Forecast>
+      <Hour> {hourlyWeather.hour}h </Hour>
+      <Image source={{ uri: `http://openweathermap.org/img/wn/${hourlyWeather.icon}@2x.png` }} style={{ width: 52, height: 52 }} />
+      <Forecast> {(hourlyWeather.temp).toFixed()}° </Forecast>
     </HourlyForecastContainer>
   );
 }
