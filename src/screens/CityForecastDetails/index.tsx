@@ -59,9 +59,9 @@ export function CityForecastDetails() {
             {
               hourlyWeather
               &&
-              <HourlyForecastList
+              <HourlyForecastList<any>
                 data={hourlyWeather}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item, index) => index}
                 renderItem={({ item }) => <HourlyForecastCard hourlyWeather={item} />}
               />
             }
@@ -71,9 +71,9 @@ export function CityForecastDetails() {
               {
                 dailyWeather
                 &&
-                <TenDaysForecastList
+                <TenDaysForecastList<any>
                   data={dailyWeather}
-                  keyExtractor={(item) => item.id}
+                  keyExtractor={(item, index) => index}
                   renderItem={({ item }) => <DailyForecastCard dailyWeather={item} />}
                 />
               }

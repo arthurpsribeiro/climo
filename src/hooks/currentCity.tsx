@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
 import * as Location from 'expo-location';
-import { openWeatherApi } from '../services/api';
+import { googlePlacesApi, openWeatherApi } from '../services/api';
 
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -15,6 +15,7 @@ interface City {
 };
 
 interface CurrentWeather {
+  name?: string,
   temp: number,
   weather: string,
   temp_min: number,
@@ -39,12 +40,23 @@ interface DailyWeather {
   id: number
 }
 
+interface SearchResultData {
+  city: string,
+  country: string,
+  temp: string,
+  weather: string,
+  min: string,
+  max: string
+}
+
 interface ICityContextData {
   city: City,
   currentWeather: CurrentWeather,
   hourlyWeather: HourlyWeather[],
   dailyWeather: DailyWeather[],
+  searchResultData: SearchResultData[],
   loading: Boolean,
+  searchCities(t: string): void,
   getLocation(): Promise<void>,
 }
 
@@ -55,6 +67,7 @@ function CurrentCityProvider({ children }: currentCityProviderProps) {
   const [currentWeather, setCurrentWeather] = useState<CurrentWeather>({} as CurrentWeather);
   const [hourlyWeather, setHourlyWeather] = useState<HourlyWeather[]>([] as HourlyWeather[]);
   const [dailyWeather, setDailyWeather] = useState<DailyWeather[]>([] as DailyWeather[]);
+  const [searchResultData, setSearchResultData] = useState<SearchResultData[]>([] as SearchResultData[])
   const [loading, setLoading] = useState(true);
 
   async function getLocation() {
@@ -118,13 +131,45 @@ function CurrentCityProvider({ children }: currentCityProviderProps) {
     }
   }
 
+  async function searchCities(searchCitiesParam) {
+    if (searchCitiesParam.length >= 3) {
+
+      try {
+        const result = await googlePlacesApi.get(`autocomplete/json?input=${searchCitiesParam}&language=pt_BR&types=(cities)&key=AIzaSyAY0945NJazxmQL4_e4E67SXjh5Lg54b5c`);
+
+        const predictions = result.data.predictions;
+        const citiesWeather = []
+
+        for (let i = 0; predictions.length - 1 >= i; i++) {
+          const weatherResult = await openWeatherApi(
+            `/weather?q=${predictions[i].structured_formatting.main_text}&units=metric&lang=pt_br&appid=efcfe2e04bed61818527d94406991e49`);
+
+          citiesWeather.push({
+            city: weatherResult.data.name,
+            country: predictions[i].structured_formatting.secondary_text,
+            temp: weatherResult.data.main.temp,
+            weather: weatherResult.data.weather[0].description,
+            min: weatherResult.data.main.temp_min,
+            max: weatherResult.data.main.temp_max
+          })
+        }
+        setSearchResultData(citiesWeather)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+  }
+
   return (
     <CurrentCityContext.Provider value={{
       city,
       getLocation,
+      searchCities,
       currentWeather,
       hourlyWeather,
       dailyWeather,
+      searchResultData,
       loading
     }}>
       {children}

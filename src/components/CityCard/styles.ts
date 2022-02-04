@@ -1,9 +1,21 @@
 import styled from 'styled-components/native';
 import Feather from 'react-native-vector-icons/Feather'
 import { RFValue } from 'react-native-responsive-fontsize';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 
 
-export const CityCardContainer = styled.View`
+// export const CityCardContainer = styled(RectButton).attrs({
+//   activeOpacity: 0.7
+// })`
+//   height: 130px;
+//   background-color: ${({ theme }) => theme.colors.background_secondary};
+//   padding: 5px;
+//   border-radius: 5px;
+//   justify-content: space-between;
+//   margin-bottom: ${RFValue(10)}px;
+// `;
+
+export const CityCardContainer = styled.TouchableOpacity`
   height: 130px;
   background-color: ${({ theme }) => theme.colors.background_secondary};
   padding: 5px;

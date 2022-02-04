@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FavSelectedIcon from "../../assets/favorite-selected-icon.svg"
+import UnFavSelectedIcon from "../../assets/favorite-unselected-icon.svg"
 
 import {
   CityCardContainer,
@@ -16,32 +16,37 @@ import {
   Icon
 } from './styles';
 
+
 interface CityCardProps {
-  city: string,
-  country: string,
-  temp: string,
-  weather: string,
-  min: string,
-  max: string
+  searchResultData: {
+    city: string,
+    country: string,
+    temp: number,
+    weather: number,
+    min: number,
+    max: number
+  }
 }
 
-export function CityCard({ city, country, temp, weather, min, max }: CityCardProps) {
+export function CityCard({ searchResultData }: CityCardProps) {
+
   return (
-    <CityCardContainer>
+    <CityCardContainer >
+
       <Header>
         <CityLocation>
-          <CityName> {city} </CityName>
-          <CountryName> {country} </CountryName>
+          <CityName> {searchResultData.city} </CityName>
+          <CountryName> {searchResultData.country} </CountryName>
         </CityLocation>
-        <CityTemp> {temp}° </CityTemp>
+        <CityTemp> {(searchResultData.temp).toFixed()}° </CityTemp>
       </Header>
 
       <Footer>
         <WeatherConditions>
-          <Weather> {weather} </Weather>
-          <TempRange> {min}° - {max}° </TempRange>
+          <Weather> {searchResultData.weather} </Weather>
+          <TempRange> {(searchResultData.min).toFixed()}° - {(searchResultData.max).toFixed()}° </TempRange>
         </WeatherConditions>
-        <FavSelectedIcon width={48} height={48} />
+        <UnFavSelectedIcon width={48} height={48} />
       </Footer>
 
     </CityCardContainer>

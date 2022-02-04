@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native'
 import { CityCard } from '../../components/CityCard';
 import { SearchInput } from '../../components/SearchInput';
+import { useCurrentCity } from '../../hooks/currentCity';
 
 import {
   CitiesResults,
@@ -9,6 +10,24 @@ import {
 } from './styles';
 
 export function CitySearch() {
+
+  const {
+    getLocation,
+    searchCities,
+    city,
+    currentWeather,
+    hourlyWeather,
+    dailyWeather,
+    searchResultData,
+    loading
+  } = useCurrentCity()
+
+  console.log('na screen', searchResultData);
+
+  const handleInput = (searchInputText: string) => {
+    searchCities(searchInputText);
+  }
+
   return (
     <Container>
       <StatusBar
@@ -20,12 +39,13 @@ export function CitySearch() {
       <Header>
         <HeaderTitle>Cidades</HeaderTitle>
       </Header>
-      <SearchInput />
+      <SearchInput handleInput={handleInput} />
 
-      <CitiesResults>
-        <CityCard city='Guarulhos' country='Brasil' temp='31' weather='ensolarado' min='26' max='31' />
-      </CitiesResults>
-
+      <CitiesResults<any>
+        data={searchResultData}
+        keyExtractor={(item, index) => index}
+        renderItem={({ item }) => <CityCard searchResultData={item} />}
+      />
 
     </Container>
   );

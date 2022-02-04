@@ -5,7 +5,6 @@ import { useTheme } from 'styled-components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-
 import { CityForecastDetails } from '../screens/CityForecastDetails';
 import { CitySearch } from '../screens/CitySearch';
 
