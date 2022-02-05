@@ -1,9 +1,9 @@
 # Climo 
 ## Aplicativo Mobile para iOS e Android. Feito com React Native.
 
-<img src="https://i.imgur.com/7plHrza.png" width="15%" alt="Climo"/>
-<img src="https://i.imgur.com/xFtwzUt.png" width="15%" alt="Climo"/>
-<img src="https://i.imgur.com/Cx2r6fe.png" width="15%" alt="Climo"/>
+<img src="https://i.imgur.com/7plHrza.png" width="30%" alt="Climo"/>
+<img src="https://i.imgur.com/xFtwzUt.png" width="30%" alt="Climo"/>
+<img src="https://i.imgur.com/Cx2r6fe.png" width="30%" alt="Climo"/>
 
 ## Progresso
 - [x] Recuperar localização do dispostivo
