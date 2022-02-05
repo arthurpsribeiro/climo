@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
+import { env } from "../../env";
+
 import * as Location from 'expo-location';
 import { googlePlacesApi, openWeatherApi } from '../services/api';
 
@@ -20,7 +22,7 @@ interface CurrentWeather {
   weather: string,
   temp_min: number,
   temp_max: number,
-}
+};
 
 interface HourlyWeather {
   hour: number,
@@ -38,7 +40,7 @@ interface DailyWeather {
   },
   icon: string,
   id: number
-}
+};
 
 interface SearchResultData {
   city: string,
@@ -82,7 +84,8 @@ function CityProvider({ children }: CityProviderProps) {
     const { latitude, longitude } = userLocation.coords
 
     try {
-      const response = await openWeatherApi.get(`weather?lat=${latitude}&lon=${longitude}&units=metric&lang=pt_br&appid=efcfe2e04bed61818527d94406991e49`);
+      const response = await openWeatherApi.get(
+        `weather?lat=${latitude}&lon=${longitude}&units=metric&lang=pt_br&appid=${env.openWeatherKey}`);
 
       setCity({ name: response.data.name });
       setCurrentWeather({
@@ -97,7 +100,8 @@ function CityProvider({ children }: CityProviderProps) {
     }
 
     try {
-      const response = await openWeatherApi.get(`onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,current,alerts&units=metric&lang=pt_br&appid=efcfe2e04bed61818527d94406991e49`);
+      const response = await openWeatherApi.get(
+        `onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,current,alerts&units=metric&lang=pt_br&appid=${env.openWeatherKey}`);
 
       const hourlyWeatherArray = [];
       response.data.hourly.forEach((data, index) => {
@@ -141,14 +145,14 @@ function CityProvider({ children }: CityProviderProps) {
 
     if (searchCitiesParam.length >= 3) {
       try {
-        const result = await googlePlacesApi.get(`autocomplete/json?input=${searchCitiesParam}&language=pt_BR&types=(cities)&key=AIzaSyAY0945NJazxmQL4_e4E67SXjh5Lg54b5c`);
+        const result = await googlePlacesApi.get(`autocomplete/json?input=${searchCitiesParam}&language=pt_BR&types=(cities)&key=${env.googleApiKey}`);
 
         const predictions = result.data.predictions;
         const citiesWeather = [];
 
         for (let i = 0; predictions.length - 1 >= i; i++) {
           const weatherResult = await openWeatherApi(
-            `/weather?q=${predictions[i].structured_formatting.main_text}&units=metric&lang=pt_br&appid=efcfe2e04bed61818527d94406991e49`);
+            `/weather?q=${predictions[i].structured_formatting.main_text}&units=metric&lang=pt_br&appid=${env.openWeatherKey}`);
 
           citiesWeather.push({
             city: weatherResult.data.name,
