@@ -6,7 +6,7 @@ import { googlePlacesApi, openWeatherApi } from '../services/api';
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-interface currentCityProviderProps {
+interface CityProviderProps {
   children: ReactNode
 };
 
@@ -56,19 +56,21 @@ interface ICityContextData {
   dailyWeather: DailyWeather[],
   searchResultData: SearchResultData[],
   loading: Boolean,
+  searchLoading: Boolean,
   searchCities(t: string): void,
   getLocation(): Promise<void>,
 }
 
-const CurrentCityContext = createContext({} as ICityContextData);
+const CityContext = createContext({} as ICityContextData);
 
-function CurrentCityProvider({ children }: currentCityProviderProps) {
+function CityProvider({ children }: CityProviderProps) {
   const [city, setCity] = useState<City>({} as City);
   const [currentWeather, setCurrentWeather] = useState<CurrentWeather>({} as CurrentWeather);
   const [hourlyWeather, setHourlyWeather] = useState<HourlyWeather[]>([] as HourlyWeather[]);
   const [dailyWeather, setDailyWeather] = useState<DailyWeather[]>([] as DailyWeather[]);
   const [searchResultData, setSearchResultData] = useState<SearchResultData[]>([] as SearchResultData[])
   const [loading, setLoading] = useState(true);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   async function getLocation() {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -131,14 +133,18 @@ function CurrentCityProvider({ children }: currentCityProviderProps) {
     }
   }
 
-  async function searchCities(searchCitiesParam) {
-    if (searchCitiesParam.length >= 3) {
+  async function searchCities(searchCitiesParam: string) {
 
+    setSearchLoading(true);
+
+    searchCitiesParam.length <= 1 && setSearchLoading(false);
+
+    if (searchCitiesParam.length >= 3) {
       try {
         const result = await googlePlacesApi.get(`autocomplete/json?input=${searchCitiesParam}&language=pt_BR&types=(cities)&key=AIzaSyAY0945NJazxmQL4_e4E67SXjh5Lg54b5c`);
 
         const predictions = result.data.predictions;
-        const citiesWeather = []
+        const citiesWeather = [];
 
         for (let i = 0; predictions.length - 1 >= i; i++) {
           const weatherResult = await openWeatherApi(
@@ -153,16 +159,16 @@ function CurrentCityProvider({ children }: currentCityProviderProps) {
             max: weatherResult.data.main.temp_max
           })
         }
-        setSearchResultData(citiesWeather)
+        setSearchResultData(citiesWeather);
+        setSearchLoading(false);
       } catch (error) {
         console.log(error)
       }
     }
-
   }
 
   return (
-    <CurrentCityContext.Provider value={{
+    <CityContext.Provider value={{
       city,
       getLocation,
       searchCities,
@@ -170,17 +176,18 @@ function CurrentCityProvider({ children }: currentCityProviderProps) {
       hourlyWeather,
       dailyWeather,
       searchResultData,
-      loading
+      loading,
+      searchLoading
     }}>
       {children}
-    </CurrentCityContext.Provider>
+    </CityContext.Provider>
   )
 };
 
-function useCurrentCity() {
-  const context = useContext(CurrentCityContext);
+function useCity() {
+  const context = useContext(CityContext);
 
   return context;
 };
 
-export { CurrentCityProvider, useCurrentCity }
+export { CityProvider, useCity }

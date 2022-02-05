@@ -13,7 +13,7 @@ import {
 
 import theme from './src/styles/theme';
 import { AppRoutes } from './src/routes/app.routes';
-import { CurrentCityProvider } from './src/hooks/currentCity';
+import { CityProvider } from './src/hooks/city';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,15 +28,14 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <StatusBar
+        backgroundColor="transparent"
+        translucent
+      />
       <NavigationContainer>
-        <StatusBar
-          barStyle='light-content'
-          backgroundColor="transparent"
-          translucent
-        />
-        <CurrentCityProvider>
+        <CityProvider>
           <AppRoutes />
-        </CurrentCityProvider>
+        </CityProvider>
       </NavigationContainer>
     </ThemeProvider>
   );

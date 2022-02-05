@@ -1,8 +1,10 @@
-import React from 'react';
-import { StatusBar } from 'react-native'
+import React, { useState } from 'react';
+import { StatusBar, Text } from 'react-native'
 import { CityCard } from '../../components/CityCard';
+import { Load } from '../../components/Load';
 import { SearchInput } from '../../components/SearchInput';
-import { useCurrentCity } from '../../hooks/currentCity';
+import { SearchInstructions } from '../../components/SearchInstructions';
+import { useCity } from '../../hooks/city';
 
 import {
   CitiesResults,
@@ -10,6 +12,8 @@ import {
 } from './styles';
 
 export function CitySearch() {
+
+  const [showGreatings, setShowGreatings] = useState(true);
 
   const {
     getLocation,
@@ -19,33 +23,39 @@ export function CitySearch() {
     hourlyWeather,
     dailyWeather,
     searchResultData,
-    loading
-  } = useCurrentCity()
-
-  console.log('na screen', searchResultData);
+    loading,
+    searchLoading
+  } = useCity()
 
   const handleInput = (searchInputText: string) => {
+    searchInputText.length > 1 && setShowGreatings(false)
     searchCities(searchInputText);
   }
 
   return (
     <Container>
-      <StatusBar
-        barStyle='light-content'
-        backgroundColor="transparent"
-        translucent
-      />
-
       <Header>
         <HeaderTitle>Cidades</HeaderTitle>
       </Header>
       <SearchInput handleInput={handleInput} />
 
-      <CitiesResults<any>
-        data={searchResultData}
-        keyExtractor={(item, index) => index}
-        renderItem={({ item }) => <CityCard searchResultData={item} />}
-      />
+      {
+        searchLoading ? (
+          <Load />
+        ) : (
+          <>
+            {searchResultData.length > 0 ? (
+              <CitiesResults<any>
+                data={searchResultData}
+                keyExtractor={(item, index) => index}
+                renderItem={({ item }) => <CityCard searchResultData={item} />}
+              />
+            ) : (
+              <SearchInstructions />
+            )}
+          </>
+        )
+      }
 
     </Container>
   );

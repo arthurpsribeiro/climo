@@ -24,14 +24,14 @@ interface CityCardProps {
     temp: number,
     weather: number,
     min: number,
-    max: number
+    max: number,
   }
 }
 
 export function CityCard({ searchResultData }: CityCardProps) {
 
   return (
-    <CityCardContainer >
+    <CityCardContainer>
 
       <Header>
         <CityLocation>

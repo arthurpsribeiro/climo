@@ -4,7 +4,7 @@ import { DailyForecastCard } from '../../components/DailyForecastCard';
 import { HourlyForecastCard } from '../../components/HourlyForecastCard';
 import { Load } from '../../components/Load';
 
-import { useCurrentCity } from '../../hooks/currentCity';
+import { useCity } from '../../hooks/city';
 
 import {
   Container,
@@ -28,7 +28,7 @@ export function CityForecastDetails() {
     hourlyWeather,
     dailyWeather,
     loading
-  } = useCurrentCity()
+  } = useCity()
 
   useEffect(() => {
     async function fetchData() {

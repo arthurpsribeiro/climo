@@ -23,5 +23,5 @@ export const TempRange = styled.Text`
   color: ${({ theme }) => theme.colors.text_dark};
   font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
-  width: ${RFPercentage(12)}px;
+  width: ${RFPercentage(14)}px;
 `;

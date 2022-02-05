@@ -20,7 +20,7 @@ export function AppRoutes() {
         tabBarInactiveTintColor: theme.colors.text,
         tabBarLabelPosition: 'beside-icon',
         tabBarStyle: {
-          paddingVertical: Platform.OS === 'ios' ? 20 : 0,
+          // paddingVertical: Platform.OS === 'ios' ? 20 : 0,
           height: 60,
         },
         headerShown: false,
@@ -52,7 +52,6 @@ export function AppRoutes() {
           ),
         }}
       />
-
     </Navigator>
   );
 }
